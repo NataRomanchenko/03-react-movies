@@ -53,8 +53,6 @@ export default function App() {
     onClose={() => setSelectedMovie(null)}
   />
       )}
-      {isLoading && <Loader />}
-{error && <ErrorMessage />}
     </>
   );
 }

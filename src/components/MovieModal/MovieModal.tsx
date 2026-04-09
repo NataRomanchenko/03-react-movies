@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import css from "./MovieModal.module.css";
 import type { Movie } from "../../types/movie";
+import { createPortal } from "react-dom";
 
 interface MovieModalProps {
   movie: Movie;
@@ -24,13 +25,13 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
   <div
-  className={css.backdrop}
-  onClick={onClose}
-  role="dialog"
-  aria-modal="true"
->
+    className={css.backdrop}
+    onClick={onClose}
+    role="dialog"
+    aria-modal="true"
+  >
     <div className={css.modal} onClick={(e) => e.stopPropagation()}>
       <button
         onClick={onClose}
@@ -41,14 +42,14 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
       </button>
 
       <img
-  className={css.image}
-  src={
-    movie.backdrop_path
-      ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-      : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-  }
-  alt={movie.title}
-/>
+        className={css.image}
+        src={
+          movie.backdrop_path
+            ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+            : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        }
+        alt={movie.title}
+      />
 
       <div className={css.content}>
         <h2>{movie.title}</h2>
@@ -64,6 +65,7 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
         </p>
       </div>
     </div>
-  </div>
+  </div>,
+  document.body
 );
 }
